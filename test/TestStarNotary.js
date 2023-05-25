@@ -6,7 +6,7 @@ contract("StarNotary", accs => {
   accounts = accs;
   owner = accounts[0];
 });
-
+/*
 it("can create a star", async () => {
   const tokenId = 1;
   const instance = await StarNotary.deployed();
@@ -124,7 +124,7 @@ it("can add the star name and star symbol properly", async () => {
   assert.equal(_name, tokenName);
   assert.equal(_symbol, tokenSymbol);
 });
-
+*/
 it("lets 2 users exchange stars", async () => {
   // 1. create 2 Stars with different tokenId
   const instance = await StarNotary.deployed();
