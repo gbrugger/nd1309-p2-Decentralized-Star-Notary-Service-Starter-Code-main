@@ -84,8 +84,10 @@ contract StarNotary is ERC721 {
         //1. Passing to star tokenId you will need to check if the owner of _tokenId1 or _tokenId2 is the sender
         address ownerOfTokenId1 = ownerOf(_tokenId1);
         address ownerOfTokenId2 = ownerOf(_tokenId2);
+        // THIS USE CASE IS REALLY INTERESTING. THE WHOLE POINT OF THE BLOCKCHAIN TECHNOLOGY
+        // IS TO DENY AN UNTRUSTED PARTY TO SPEND SOMEONE'S FUNDS WITHOUT THEIR AUTHORIZATION.
         require(
-            _isApprovedOrOwner(_msgSender(), _tokenId1),
+            _msgSender() == ownerOfTokenId1 || _msgSender() == ownerOfTokenId2,
             "You can't exchange if you don't own any of the Stars."
         );
 
@@ -99,8 +101,13 @@ contract StarNotary is ERC721 {
     // Implement Task 1 Transfer Stars
     function transferStar(address _to1, uint256 _tokenId) public {
         //1. Check if the sender is the ownerOf(_tokenId)
+        // NOBODY CARED TO READ THIS LINE BEFORE, SO I WILL IMPLEMENT IT...
+        // BETTER YET, I'LL COPY THE FIRST LINE FROM transferFrom()
         // transferFrom() and safeTransferFrom() already require() the msg.sender to be the owner, approved, or operator.
-
+        require(
+            ownerOf(_tokenId) == _msgSender(),
+            "ERC721: transfer caller is not owner nor approved"
+        );
         //2. Use the transferFrom(from, to, tokenId); function to transfer the Star
         transferFrom(_msgSender(), _to1, _tokenId);
     }
